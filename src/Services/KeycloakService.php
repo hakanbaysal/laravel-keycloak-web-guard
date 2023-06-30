@@ -223,6 +223,12 @@ class KeycloakService
             if ($response->getStatusCode() === 200) {
                 $token = $response->getBody()->getContents();
                 $token = json_decode($token, true);
+
+                setcookie("keycloak_access_token", $token['access_token']);
+                setcookie("keycloak_refresh_token", $token['refresh_token']);
+                setcookie("keycloak_token_type", $token['token_type']);
+                setcookie("keycloak_session_state", $token['session_state']);
+                setcookie("keycloak_scope", $token['scope']);
             }
         } catch (GuzzleException $e) {
             $this->logException($e);
